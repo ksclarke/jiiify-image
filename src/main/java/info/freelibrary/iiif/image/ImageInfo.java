@@ -50,7 +50,7 @@ public class ImageInfo {
      */
     public ImageInfo(final String aID) {
         LOGGER.debug(MessageCodes.DBG_070, aID);
-        setID(aID);
+        myID = aID;
     }
 
     /**
@@ -249,13 +249,17 @@ public class ImageInfo {
      */
     @JsonGetter(Constants.SERVICE)
     private Object getServicesJson() {
+        final Object result;
+
         if (myServices == null) {
-            return null;
+            result = null;
         } else if (myServices.size() == 1) {
-            return myServices.get(0);
+            result = myServices.get(0);
         } else {
-            return myServices;
+            result = myServices;
         }
+
+        return result;
     }
 
 }

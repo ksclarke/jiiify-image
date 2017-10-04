@@ -13,7 +13,7 @@ import info.freelibrary.iiif.image.Rotation;
 import info.freelibrary.iiif.image.Size;
 
 /**
- * An OpenCV image implementation.
+ * An OpenCV image implementation. Note that this is not yet implemented.
  *
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
@@ -24,6 +24,7 @@ public class OpenCVImage implements Image {
      *
      * @param aImageByteArray An image byte array
      */
+    @SuppressWarnings("PMD")
     public OpenCVImage(final byte[] aImageByteArray) {
 
     }
@@ -33,6 +34,7 @@ public class OpenCVImage implements Image {
      *
      * @param aImageFile An image file
      */
+    @SuppressWarnings("PMD")
     public OpenCVImage(final File aImageFile) {
 
     }

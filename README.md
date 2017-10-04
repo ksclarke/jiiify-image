@@ -17,10 +17,9 @@ A slightly more complicated example:
     final Region region = new Region(0, 0, 1000, 1000);
     final Size size = new Size(500, 500);
     final Rotation rotation = new Rotation(45);
-    final Request request = new Request(id, "/iiif", region, size, rotation, Quality.COLOR, Format.JPG);
-    final Format format = request.getFormat();
+    final Request request = new Request(id, "/iiif", region, size, rotation, Quality.COLOR);
 
-    image.transform(request).write(format, new File("tif-transformed." + format.getExtension());
+    image.transform(request).write(format.JPG, new File("tif-transformed.jpg"));
 
 And another example:
 

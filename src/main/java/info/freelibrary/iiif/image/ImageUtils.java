@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import info.freelibrary.iiif.IIIFRuntimeException;
 import info.freelibrary.util.FileUtils;
 import info.freelibrary.util.IOUtils;
 import info.freelibrary.util.Logger;
@@ -69,18 +70,19 @@ public final class ImageUtils {
      */
     public static List<String> getTilePaths(final String aService, final String aID, final int aTileSize,
             final int aWidth, final int aHeight) {
-        final ArrayList<String> list = new ArrayList<>();
-        final int longDim = Math.max(aWidth, aHeight);
         final String id;
 
         // Object ID may need to be URL encoded for use on the Web
         try {
             id = URLEncoder.encode(aID, StandardCharsets.UTF_8.name());
         } catch (final UnsupportedEncodingException details) {
-            throw new RuntimeException(details); // All JVMs required to support UTF-8
+            throw new IIIFRuntimeException(details); // All JVMs required to support UTF-8
         }
 
         LOGGER.debug(MessageCodes.DBG_094, aID, aTileSize, aWidth, aHeight);
+
+        final ArrayList<String> list = new ArrayList<>();
+        final int longDim = Math.max(aWidth, aHeight);
 
         for (int multiplier = 1; (multiplier * aTileSize) < longDim; multiplier *= 2) {
             final int tileSize = multiplier * aTileSize;
@@ -264,10 +266,14 @@ public final class ImageUtils {
     }
 
     private static int gcd(final int aWidth, final int aHeight) {
+        final int gcd;
+
         if (aHeight == 0) {
-            return aWidth;
+            gcd = aWidth;
         } else {
-            return gcd(aHeight, aWidth % aHeight);
+            gcd = gcd(aHeight, aWidth % aHeight);
         }
+
+        return gcd;
     }
 }

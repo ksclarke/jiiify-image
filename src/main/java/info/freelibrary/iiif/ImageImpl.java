@@ -13,24 +13,24 @@ public enum ImageImpl {
     JAVA {
 
         @Override
-        public JavaImage getInstance(final byte[] aImageBytes) throws IOException {
+        public JavaImage getImage(final byte[] aImageBytes) throws IOException {
             return new JavaImage(aImageBytes);
         }
 
         @Override
-        public JavaImage getInstance(final File aImageFile) throws IOException {
+        public JavaImage getImage(final File aImageFile) throws IOException {
             return new JavaImage(aImageFile);
         }
     },
     OPENCV {
 
         @Override
-        public OpenCVImage getInstance(final byte[] aImageBytes) throws IOException {
+        public OpenCVImage getImage(final byte[] aImageBytes) throws IOException {
             return new OpenCVImage(aImageBytes);
         }
 
         @Override
-        public OpenCVImage getInstance(final File aImageFile) throws IOException {
+        public OpenCVImage getImage(final File aImageFile) throws IOException {
             return new OpenCVImage(aImageFile);
         }
     };
@@ -42,7 +42,7 @@ public enum ImageImpl {
      * @return An image
      * @throws IOException If there was trouble reading from the byte array
      */
-    public abstract Image getInstance(byte[] aImageBytes) throws IOException;
+    public abstract Image getImage(byte[] aImageBytes) throws IOException;
 
     /**
      * Gets an image instance from the supplied image file.
@@ -51,6 +51,6 @@ public enum ImageImpl {
      * @return An image
      * @throws IOException If there was trouble reading from the byte array
      */
-    public abstract Image getInstance(File aImageFile) throws IOException;
+    public abstract Image getImage(File aImageFile) throws IOException;
 
 }

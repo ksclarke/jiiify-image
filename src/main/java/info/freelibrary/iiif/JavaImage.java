@@ -50,9 +50,9 @@ import info.freelibrary.util.LoggerFactory;
  */
 public class JavaImage implements Image {
 
-    private static final float DEFAULT_GIF_COMPRESSION = 0.7f;
+    private static final float DEFAULT_GIF_QUALITY = 0.7f;
 
-    private static final float DEFAULT_JPG_COMPRESSION = 0.9f;
+    private static final float DEFAULT_JPG_QUALITY = 0.9f;
 
     // Whether a file system cache should be used when reading and writing images
     static {
@@ -65,6 +65,7 @@ public class JavaImage implements Image {
 
     private BufferedImage myImage;
 
+    @SuppressWarnings("all")
     private IIOMetadata myMetadata;
 
     private String myFormat;
@@ -208,7 +209,7 @@ public class JavaImage implements Image {
         if (aRotation.isRotated()) {
             final BufferedImage image = getBufferedImage();
 
-            if (aRotation.isMultipleOf90) {
+            if (aRotation.isMultipleOf90Rotation) {
                 myImage = Scalr.rotate(image, Scalr.Rotation.valueOf("CW_" + aRotation.getValueAsInt()));
             } else {
                 final AffineTransform transform = new AffineTransform();
@@ -232,7 +233,6 @@ public class JavaImage implements Image {
             final int width = buffer.getWidth();
             final int height = buffer.getHeight();
             final BufferedImage image;
-            final Graphics graphics;
 
             if (aQuality == Quality.GRAY) {
                 image = new BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY);
@@ -246,9 +246,9 @@ public class JavaImage implements Image {
                 throw new UnsupportedOperationException(message);
             }
 
-            graphics = image.getGraphics();
-            graphics.drawImage(myImage, 0, 0, null);
+            final Graphics graphics = image.getGraphics();
 
+            graphics.drawImage(myImage, 0, 0, null);
             myImage = image;
             graphics.dispose();
         }
@@ -298,6 +298,8 @@ public class JavaImage implements Image {
 
     @Override
     public int hashCode() {
+        int hashCode;
+
         try {
             final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
             final ImageOutputStream outStream = ImageIO.createImageOutputStream(byteStream);
@@ -311,11 +313,13 @@ public class JavaImage implements Image {
             bytes = byteStream.toByteArray();
             outStream.close();
 
-            return Arrays.hashCode(bytes);
+            hashCode = Arrays.hashCode(bytes);
         } catch (final IOException | NoSuchElementException details) {
             LOGGER.error(details, details.getMessage());
-            return 0;
+            hashCode = 0;
         }
+
+        return hashCode;
     }
 
     /**
@@ -402,14 +406,12 @@ public class JavaImage implements Image {
             // Set a lower compression value than the default value of .7f
             if (param.canWriteCompressed()) {
                 param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                param.setCompressionQuality(aQuality == 0.0f ? DEFAULT_JPG_COMPRESSION : aQuality);
+                param.setCompressionQuality(aQuality == 0.0f ? DEFAULT_JPG_QUALITY : aQuality);
             }
-        } else if (aFormat == Format.GIF) {
-            if (param.canWriteCompressed()) {
-                param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-                param.setCompressionType("LZW");
-                param.setCompressionQuality(aQuality == 0.0f ? DEFAULT_GIF_COMPRESSION : aQuality);
-            }
+        } else if ((aFormat == Format.GIF) && param.canWriteCompressed()) {
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionType("LZW");
+            param.setCompressionQuality(aQuality == 0.0f ? DEFAULT_GIF_QUALITY : aQuality);
         }
 
         try {

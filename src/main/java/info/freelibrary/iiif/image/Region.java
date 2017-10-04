@@ -19,16 +19,16 @@ public class Region {
 
     private final float[] myDimensions;
 
-    private boolean isPercentage;
+    private boolean myRegionIsPercentage;
 
-    private boolean isFullImage;
+    private boolean myRegionIsFullImage;
 
     /**
      * Creates a new image region object representing the whole image.
      */
     public Region() {
-        isFullImage = true;
-        isPercentage = true;
+        myRegionIsFullImage = true;
+        myRegionIsPercentage = true;
         myDimensions = new float[] { 100f, 100f, 100f, 100f };
     }
 
@@ -38,10 +38,10 @@ public class Region {
      * @param aPercent A percentage of the whole image
      */
     public Region(final float aPercent) {
-        isPercentage = true;
+        myRegionIsPercentage = true;
 
         if (aPercent == 100f) {
-            isFullImage = true;
+            myRegionIsFullImage = true;
         }
 
         myDimensions = new float[] { 100f, 100f, 100f, 100f };
@@ -56,10 +56,10 @@ public class Region {
      * @param aHeight A height for an image region as a percentage
      */
     public Region(final float aX, final float aY, final float aWidth, final float aHeight) {
-        isPercentage = true;
+        myRegionIsPercentage = true;
 
         if ((aX == 100f) && (aY == 100f) && (aWidth == 100f) && (aHeight == 100f)) {
-            isFullImage = true;
+            myRegionIsFullImage = true;
         }
 
         myDimensions = new float[] { aX, aY, aWidth, aHeight };
@@ -88,7 +88,7 @@ public class Region {
         final Region region;
 
         if (aRegionString == null) {
-            throw new InvalidRegionException(new NullPointerException());
+            throw new InvalidRegionException(MessageCodes.EXC_020, "null");
         } else if (aRegionString.equals(FULL)) {
             region = new Region(100f);
         } else if (aRegionString.startsWith(PERCENT)) {
@@ -119,16 +119,24 @@ public class Region {
      * @return A float value for the supplied region coordinate
      */
     public float getFloat(final Coordinate aCoordinate) {
+        final float coordinate;
+
         switch (aCoordinate) {
             case X:
-                return myDimensions[0];
+                coordinate = myDimensions[0];
+                break;
             case Y:
-                return myDimensions[1];
+                coordinate = myDimensions[1];
+                break;
             case WIDTH:
-                return myDimensions[2];
+                coordinate = myDimensions[2];
+                break;
             default:
-                return myDimensions[3];
+                coordinate = myDimensions[3];
+                break;
         }
+
+        return coordinate;
     }
 
     @Override
@@ -138,7 +146,7 @@ public class Region {
         if (isFullImage()) {
             sb.append(FULL);
         } else {
-            if (usesPercentages()) {
+            if (isPercentage()) {
                 sb.append(PERCENT);
             }
 
@@ -156,8 +164,8 @@ public class Region {
      *
      * @return True if this image region is represented with percentages
      */
-    public boolean usesPercentages() {
-        return isPercentage;
+    public boolean isPercentage() {
+        return myRegionIsPercentage;
     }
 
     /**
@@ -166,7 +174,7 @@ public class Region {
      * @return True if this image region represents the full image
      */
     public boolean isFullImage() {
-        return isFullImage;
+        return myRegionIsFullImage;
     }
 
     private String prettyPrint(final float aValue) {
@@ -176,17 +184,18 @@ public class Region {
 
     private static float[] parseDimensions(final String aRegionString) throws InvalidRegionException {
         final String[] parts = aRegionString.split(",");
-        final float[] dimensions = new float[4];
 
         if (parts.length != 4) {
             throw new InvalidRegionException(MessageCodes.EXC_020, aRegionString);
         }
 
+        final float[] dimensions = new float[4];
+
         for (int index = 0; index < parts.length; index++) {
             try {
                 dimensions[index] = Float.parseFloat(parts[index]);
             } catch (final NumberFormatException details) {
-                throw new InvalidRegionException(MessageCodes.EXC_018, parts[index]);
+                throw new InvalidRegionException(details, MessageCodes.EXC_018, parts[index]);
             }
         }
 

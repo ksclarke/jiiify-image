@@ -1,10 +1,12 @@
 
 package info.freelibrary.iiif.image;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import info.freelibrary.iiif.IIIFRuntimeException;
 import info.freelibrary.util.StringUtils;
 
 /**
@@ -58,11 +60,11 @@ public enum Format {
     public String getExtension() {
         for (final Format format : values()) {
             if (format.myValue.equals(myValue)) {
-                return format.name().toLowerCase();
+                return format.name().toLowerCase(Locale.US);
             }
         }
 
-        throw new RuntimeException("Didn't find a matching ext");
+        throw new IIIFRuntimeException("Didn't find a matching ext");
     }
 
     /**
@@ -97,7 +99,7 @@ public enum Format {
     public static Format parseExtension(final String aValue) throws UnsupportedFormatException {
         Objects.requireNonNull(aValue, "");
 
-        final String ext = aValue.startsWith(".") ? aValue.substring(1) : aValue;
+        final String ext = (aValue.charAt(0) == '.') ? aValue.substring(1) : aValue;
         final Format[] values = values();
 
         for (final Format format : values) {

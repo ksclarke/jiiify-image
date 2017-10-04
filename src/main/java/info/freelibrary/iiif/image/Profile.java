@@ -141,11 +141,11 @@ public class Profile {
 
         json.add(myLevel.toURL());
 
-        if (myFormats.size() > 0) {
+        if (!myFormats.isEmpty()) {
             map.put(Constants.FORMATS, myFormats);
         }
 
-        if (myQualities.size() > 0) {
+        if (!myQualities.isEmpty()) {
             map.put(Constants.QUALITIES, myQualities);
         }
 

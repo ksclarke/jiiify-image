@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
+import info.freelibrary.iiif.IIIFRuntimeException;
+
 /**
  * The Image Info profile level.
  *
@@ -51,7 +53,7 @@ public enum APIComplianceLevel {
             return new URL(myURL);
         } catch (final MalformedURLException details) {
             // The provided URLs should not have syntax exceptions
-            throw new RuntimeException(details);
+            throw new IIIFRuntimeException(details);
         }
     }
 

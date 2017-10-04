@@ -23,9 +23,9 @@ public class Size {
 
     private static final String PCT_LABEL = "pct:";
 
-    private boolean isPercentage;
+    private boolean mySizeIsPercentage;
 
-    private boolean isScalable;
+    private boolean mySizeIsScalable;
 
     private int myPercentage;
 
@@ -37,7 +37,7 @@ public class Size {
      * Creates a new image size object.
      */
     public Size() {
-        isPercentage = true;
+        mySizeIsPercentage = true;
         myPercentage = 100;
     }
 
@@ -48,7 +48,7 @@ public class Size {
      * @throws InvalidSizeException If the supplied percent is not between one and 360 degrees
      */
     public Size(final int aPercent) throws InvalidSizeException {
-        isPercentage = true;
+        mySizeIsPercentage = true;
         myPercentage = validate(aPercent);
     }
 
@@ -74,14 +74,14 @@ public class Size {
         final Size size;
 
         if (aSizeString == null) {
-            throw new InvalidSizeException(new NullPointerException(), MessageCodes.EXC_014, "null");
+            throw new InvalidSizeException(MessageCodes.EXC_014, "null");
         } else if (aSizeString.equals(FULL)) {
             size = new Size();
         } else if (aSizeString.startsWith(PCT_LABEL)) {
             try {
                 size = new Size(Integer.parseInt(aSizeString.substring(4)));
             } catch (final NumberFormatException details) {
-                throw new InvalidSizeException(MessageCodes.EXC_014, aSizeString);
+                throw new InvalidSizeException(details, MessageCodes.EXC_014, aSizeString);
             }
         } else if (aSizeString.contains(DELIM)) {
             final String[] parts = aSizeString.split(DELIM);
@@ -96,23 +96,24 @@ public class Size {
                 try {
                     size = new Size(0, Integer.parseInt(parts[1]));
                 } catch (final NumberFormatException details) {
-                    throw new InvalidSizeException(MessageCodes.EXC_017, Constants.HEIGHT, parts[1]);
+                    throw new InvalidSizeException(details, MessageCodes.EXC_017, Constants.HEIGHT, parts[1]);
                 }
             } else if (aSizeString.startsWith(SCALE_DELIM)) {
-                final int height;
                 final int width;
 
                 try {
                     // Chop off the exclamation point at the start of the string
                     width = Integer.parseInt(parts[0].substring(1));
                 } catch (final NumberFormatException details) {
-                    throw new InvalidSizeException(MessageCodes.EXC_017, Constants.WIDTH, parts[0]);
+                    throw new InvalidSizeException(details, MessageCodes.EXC_017, Constants.WIDTH, parts[0]);
                 }
+
+                final int height;
 
                 try {
                     height = Integer.parseInt(parts[1]);
                 } catch (final NumberFormatException details) {
-                    throw new InvalidSizeException(MessageCodes.EXC_017, Constants.HEIGHT, parts[0]);
+                    throw new InvalidSizeException(details, MessageCodes.EXC_017, Constants.HEIGHT, parts[0]);
                 }
 
                 size = new Size(width, height).isScalable(true);
@@ -120,22 +121,23 @@ public class Size {
                 try {
                     size = new Size(Integer.parseInt(parts[0]), 0);
                 } catch (final NumberFormatException details) {
-                    throw new InvalidSizeException(MessageCodes.EXC_017, Constants.WIDTH, parts[0]);
+                    throw new InvalidSizeException(details, MessageCodes.EXC_017, Constants.WIDTH, parts[0]);
                 }
             } else {
-                final int height;
                 final int width;
 
                 try {
                     width = Integer.parseInt(parts[0]);
                 } catch (final NumberFormatException details) {
-                    throw new InvalidSizeException(MessageCodes.EXC_017, Constants.WIDTH, parts[0]);
+                    throw new InvalidSizeException(details, MessageCodes.EXC_017, Constants.WIDTH, parts[0]);
                 }
+
+                final int height;
 
                 try {
                     height = Integer.parseInt(parts[1]);
                 } catch (final NumberFormatException details) {
-                    throw new InvalidSizeException(MessageCodes.EXC_017, Constants.HEIGHT, parts[0]);
+                    throw new InvalidSizeException(details, MessageCodes.EXC_017, Constants.HEIGHT, parts[0]);
                 }
 
                 size = new Size(width, height);
@@ -153,7 +155,7 @@ public class Size {
      * @return True if the image size request is for a percentage of the actual image size
      */
     public boolean isPercentage() {
-        return isPercentage;
+        return mySizeIsPercentage;
     }
 
     /**
@@ -171,7 +173,7 @@ public class Size {
      * @return True if this image size request is for the full size of the image
      */
     public boolean isFullSize() {
-        return isPercentage && (myPercentage == 100);
+        return mySizeIsPercentage && (myPercentage == 100);
     }
 
     /**
@@ -202,9 +204,9 @@ public class Size {
             sb.append(PCT_LABEL).append(getPercentage());
         } else if (isScalable()) {
             sb.append(SCALE_DELIM).append(getWidth()).append(DELIM).append(getHeight());
-        } else if (!hasHeight()) {
+        } else if (hasWidth() && !hasHeight()) {
             sb.append(getWidth()).append(DELIM);
-        } else if (!hasWidth()) {
+        } else if (hasHeight() && !hasWidth()) {
             sb.append(DELIM).append(getHeight());
         } else {
             sb.append(getWidth()).append(DELIM).append(getHeight());
@@ -219,7 +221,7 @@ public class Size {
      * @return True if a scaled response is acceptable; else, false
      */
     public boolean isScalable() {
-        return isScalable;
+        return mySizeIsScalable;
     }
 
     /**
@@ -229,7 +231,7 @@ public class Size {
      * @return True if a scaled response is acceptable; else, false
      */
     public Size isScalable(final boolean aScalableSize) {
-        isScalable = aScalableSize;
+        mySizeIsScalable = aScalableSize;
         return this;
     }
 
@@ -264,7 +266,7 @@ public class Size {
         final int height;
 
         if (myHeight == 0) {
-            if (isPercentage) {
+            if (mySizeIsPercentage) {
                 LOGGER.debug(MessageCodes.DBG_073, myPercentage);
                 height = (myPercentage / 100) * aImageHeight;
             } else {
@@ -299,7 +301,7 @@ public class Size {
         final int width;
 
         if (myWidth == 0) {
-            if (isPercentage) {
+            if (mySizeIsPercentage) {
                 LOGGER.debug(MessageCodes.DBG_078, myPercentage);
                 width = (myPercentage / 100) * aImageWidth;
             } else {

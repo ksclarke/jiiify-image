@@ -46,7 +46,7 @@ public class RequestTest {
     }
 
     @Test
-    public void testClone() {
+    public void testClone() throws CloneNotSupportedException {
         try {
             final Request request = Request.parse(IMAGE_REQUEST);
             final Request clone = request.clone();

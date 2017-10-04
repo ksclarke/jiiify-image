@@ -24,9 +24,9 @@ public class Request implements Cloneable {
 
     private static final String EMPTY = "";
 
-    private final String myID;
+    private String myID;
 
-    private final String myServicePrefix;
+    private String myServicePrefix;
 
     private Region myRegion;
 
@@ -148,7 +148,7 @@ public class Request implements Cloneable {
     public static final Request parse(final String aIIIFImagePath) throws UnsupportedFormatException,
             UnsupportedQualityException, InvalidSizeException, InvalidRegionException, InvalidRotationException {
         final String[] pathComponents = aIIIFImagePath.substring(1).split(DELIM);
-        final int dotIndex = pathComponents[5].lastIndexOf(".");
+        final int dotIndex = pathComponents[5].lastIndexOf('.');
 
         LOGGER.debug(MessageCodes.DBG_071, aIIIFImagePath);
 
@@ -182,12 +182,34 @@ public class Request implements Cloneable {
     }
 
     /**
+     * Sets the IIIF service prefix for the request.
+     *
+     * @param aPrefix A IIIF service prefix
+     * @return The request
+     */
+    public Request setPrefix(final String aPrefix) {
+        myServicePrefix = aPrefix;
+        return this;
+    }
+
+    /**
      * Gets the ID of the requested image.
      *
      * @return The ID of the requested image
      */
     public String getID() {
         return myID;
+    }
+
+    /**
+     * Sets the ID of the requested image.
+     *
+     * @param aID An image ID
+     * @return The request
+     */
+    public Request setID(final String aID) {
+        myID = aID;
+        return this;
     }
 
     /**
@@ -304,6 +326,8 @@ public class Request implements Cloneable {
      */
     @Override
     public boolean equals(final Object aObject) {
+        final boolean result;
+
         if (aObject instanceof Request) {
             final Request request = (Request) aObject;
             final String servicePrefix = request.getPrefix();
@@ -316,11 +340,15 @@ public class Request implements Cloneable {
 
             if (servicePrefix.equals(myServicePrefix) && id.equals(myID) && format.equals(myFormat) && quality.equals(
                     myQuality) && region.equals(myRegion) && rotation.equals(myRotation) && size.equals(mySize)) {
-                return true;
+                result = true;
+            } else {
+                result = false;
             }
+        } else {
+            result = false;
         }
 
-        return false;
+        return result;
     }
 
     @Override
@@ -342,12 +370,8 @@ public class Request implements Cloneable {
      * Creates a clone of the ImageRequest.
      */
     @Override
-    public Request clone() {
-        try {
-            return (Request) super.clone();
-        } catch (final CloneNotSupportedException details) {
-            throw new RuntimeException(details);
-        }
+    public Request clone() throws CloneNotSupportedException {
+        return (Request) super.clone();
     }
 
 }

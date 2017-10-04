@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonPropertyOrder({ PhysicalDimConstants.CONTEXT_PROPERTY, PhysicalDimConstants.PROFILE_PROPERTY,
     PhysicalDimConstants.PHYSICAL_SCALE, PhysicalDimConstants.PHYSICAL_UNITS })
-public class PhysicalDimService extends Service {
+public class PhysicalDimService implements Service {
 
     private final double myPhysicalScale;
 

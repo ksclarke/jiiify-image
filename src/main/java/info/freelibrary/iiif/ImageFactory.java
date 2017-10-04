@@ -24,7 +24,7 @@ public final class ImageFactory {
      * @throws IOException If the image can't be read
      */
     public static Image getImage(final byte[] aImageByteArray) throws IOException {
-        return DEFAULT_IMAGE_IMPL.getInstance(aImageByteArray);
+        return DEFAULT_IMAGE_IMPL.getImage(aImageByteArray);
     }
 
     /**
@@ -36,7 +36,7 @@ public final class ImageFactory {
      * @throws IOException If the image can't be read
      */
     public static Image getImage(final ImageImpl aImageType, final byte[] aImageByteArray) throws IOException {
-        return aImageType.getInstance(aImageByteArray);
+        return aImageType.getImage(aImageByteArray);
     }
 
     /**
@@ -47,7 +47,7 @@ public final class ImageFactory {
      * @throws IOException If the image can't be read
      */
     public static Image getImage(final File aImageFile) throws IOException {
-        return DEFAULT_IMAGE_IMPL.getInstance(aImageFile);
+        return DEFAULT_IMAGE_IMPL.getImage(aImageFile);
     }
 
     /**
@@ -59,7 +59,7 @@ public final class ImageFactory {
      * @throws IOException If the image can't be ready
      */
     public static Image getImage(final ImageImpl aImageType, final File aImageFile) throws IOException {
-        return aImageType.getInstance(aImageFile);
+        return aImageType.getImage(aImageFile);
     }
 
 }

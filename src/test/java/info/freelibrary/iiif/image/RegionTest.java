@@ -97,13 +97,13 @@ public class RegionTest {
     @Test
     public void testUsesPercentages() {
         try {
-            assertTrue(Region.parse("pct:100,100,100,100").usesPercentages());
+            assertTrue(Region.parse("pct:100,100,100,100").isPercentage());
         } catch (final InvalidRegionException details) {
             fail(details.getMessage());
         }
 
         try {
-            assertFalse(Region.parse("100,100,100,100").usesPercentages());
+            assertFalse(Region.parse("100,100,100,100").isPercentage());
         } catch (final InvalidRegionException details) {
             fail(details.getMessage());
         }

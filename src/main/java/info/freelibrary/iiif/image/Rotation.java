@@ -10,9 +10,9 @@ public class Rotation {
 
     private static final String MIRRORED_LABEL = "!";
 
-    public boolean isMirrored;
+    public boolean isMirroredRotation;
 
-    public boolean isMultipleOf90;
+    public boolean isMultipleOf90Rotation;
 
     public float myRotation;
 
@@ -91,7 +91,7 @@ public class Rotation {
      * @return Whether the image is mirrored
      */
     public boolean isMirrored() {
-        return isMirrored;
+        return isMirroredRotation;
     }
 
     /**
@@ -101,7 +101,7 @@ public class Rotation {
      * @return The rotation
      */
     public Rotation isMirrored(final boolean aMirror) {
-        isMirrored = aMirror;
+        isMirroredRotation = aMirror;
         return this;
     }
 
@@ -120,7 +120,7 @@ public class Rotation {
      * @return True if the rotation is a multiple of ninety; else, false
      */
     public boolean isMultipleOf90() {
-        return isMultipleOf90;
+        return isMultipleOf90Rotation;
     }
 
     private void parseRotation(final String aRotationString) throws InvalidRotationException {
@@ -128,7 +128,7 @@ public class Rotation {
             myRotation = Float.parseFloat(aRotationString);
             validate();
         } catch (final NumberFormatException details) {
-            throw new InvalidRotationException(MessageCodes.EXC_013, aRotationString);
+            throw new InvalidRotationException(details, MessageCodes.EXC_013, aRotationString);
         }
     }
 
@@ -138,7 +138,7 @@ public class Rotation {
         }
 
         if ((myRotation % 90) == 0) {
-            isMultipleOf90 = true;
+            isMultipleOf90Rotation = true;
         }
     }
 
