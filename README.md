@@ -1,4 +1,4 @@
-# jiiify-presentation &nbsp; [![Build Status](http://img.shields.io/travis/ksclarke/jiiify-image/master.svg?style=flat)](https://travis-ci.org/ksclarke/jiiify-image) [![Codacy coverage](https://img.shields.io/codacy/coverage/39ce86dea4e94e969aba8b50a42cf7f8.svg?maxAge=0)](https://www.codacy.com/app/ksclarke/jiiify-image?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ksclarke/jiiify-image&amp;utm_campaign=Badge_Coverage) [![Codacy grade](https://img.shields.io/codacy/grade/39ce86dea4e94e969aba8b50a42cf7f8.svg?maxAge=0)](https://www.codacy.com/app/ksclarke/jiiify-image?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ksclarke/jiiify-image&amp;utm_campaign=Badge_Grade) [![Maven Central](https://img.shields.io/maven-central/v/info.freelibrary/jiiify-image.svg)](http://mvnrepository.com/artifact/info.freelibrary/jiiify-image) [![BSD 3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg?maxAge=1800)](https://opensource.org/licenses/BSD-3-Clause)
+# jiiify-image &nbsp; [![Build Status](http://img.shields.io/travis/ksclarke/jiiify-image/master.svg?style=flat)](https://travis-ci.org/ksclarke/jiiify-image) [![Codacy coverage](https://img.shields.io/codacy/coverage/39ce86dea4e94e969aba8b50a42cf7f8.svg?maxAge=0)](https://www.codacy.com/app/ksclarke/jiiify-image?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ksclarke/jiiify-image&amp;utm_campaign=Badge_Coverage) [![Codacy grade](https://img.shields.io/codacy/grade/39ce86dea4e94e969aba8b50a42cf7f8.svg?maxAge=0)](https://www.codacy.com/app/ksclarke/jiiify-image?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ksclarke/jiiify-image&amp;utm_campaign=Badge_Grade) [![Maven Central](https://img.shields.io/maven-central/v/info.freelibrary/jiiify-image.svg)](http://mvnrepository.com/artifact/info.freelibrary/jiiify-image) [![BSD 3-Clause](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg?maxAge=1800)](https://opensource.org/licenses/BSD-3-Clause)
 
 A [IIIF Image API](http://iiif.io/api/image) library for Java. It does not contain a server. It's meant to be used in a server or it can be used from a command line / GUI application that generates images from files on disk or byte arrays.
 
@@ -21,6 +21,14 @@ A slightly more complicated example:
     final Format format = request.getFormat();
 
     image.transform(request).write(format, new File("tif-transformed." + format.getExtension());
+
+And another example:
+
+    final Image image = ImageFactory.getImage(new File("src/test/resources/images/test.tif"));
+    final Request request = Request.parse("/iiif/ASDF123/0,0,1000,1000/500,500/45/default.jpg");
+    final Format format = request.getFormat();
+
+    image.transform(request).write(format, new File("tif-transfored." + format.getExtension());
 
 ### Getting Started
 
