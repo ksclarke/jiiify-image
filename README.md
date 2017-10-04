@@ -6,13 +6,13 @@ This is a work in progress. Not everything is supported yet. In particular, righ
 
 A very simple example:
 
-    final Image image = ImageFactory.getImage("src/test/resources/images/test.tif");
+    final Image image = ImageFactory.getImage(new File("src/test/resources/images/test.tif"));
     
     image.resizeTo(1000, 1000).write(Format.JPG, new File("tif-resized.jpg"));
 
 A slightly more complicated example:
 
-    final Image image = ImageFactory.getImage("src/test/resources/images/test.tif");
+    final Image image = ImageFactory.getImage(new File("src/test/resources/images/test.tif"));
     final String id = UUID.randomUUID().toString();
     final Region region = new Region(0, 0, 1000, 1000);
     final Size size = new Size(500, 500);
