@@ -53,7 +53,9 @@ public class Profile {
     private final List<Quality> myQualities;
 
     /**
-     * Creates a profile.
+     * Creates a profile from the supplied IIIF API compliance level.
+     *
+     * @param aLevel A IIIF API compliance level
      */
     public Profile(final APIComplianceLevel aLevel) {
         myLevel = aLevel;

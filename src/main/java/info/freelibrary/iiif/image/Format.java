@@ -70,6 +70,7 @@ public enum Format {
      *
      * @param aMimeType A MIME type for which to return a file extension
      * @return A file extension for the supplied MIME type
+     * @throws UnsupportedFormatException If the supplied media type doesn't map to a known format
      */
     public static final String getExtension(final String aMimeType) throws UnsupportedFormatException {
         return parseMimeType(aMimeType).getExtension();
@@ -80,6 +81,7 @@ public enum Format {
      *
      * @param aFileExt A file extension for which to return a MIME type
      * @return A MIME type for the supplied file extension
+     * @throws UnsupportedFormatException If the supplied file extension doesn't map to a know format
      */
     public static final String getMimeType(final String aFileExt) throws UnsupportedFormatException {
         return parseExtension(aFileExt).myValue;

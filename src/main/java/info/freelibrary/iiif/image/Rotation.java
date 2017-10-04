@@ -38,6 +38,7 @@ public class Rotation {
      * Creates an image rotation from the supplied IIIF URI rotation string.
      *
      * @param aRotationString A IIIF URI rotation string
+     * @return This rotation
      * @throws InvalidRotationException If the supplied string isn't a valid IIIF URI rotation string
      */
     public static Rotation parse(final String aRotationString) throws InvalidRotationException {

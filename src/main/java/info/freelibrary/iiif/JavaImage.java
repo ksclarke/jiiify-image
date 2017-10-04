@@ -73,6 +73,7 @@ public class JavaImage implements Image {
      * Creates an image from the supplied byte array.
      *
      * @param aImageByteArray An image byte array
+     * @throws IOException If there is trouble reading the image
      */
     public JavaImage(final byte[] aImageByteArray) throws IOException {
         final ByteArrayInputStream inStream = new ByteArrayInputStream(aImageByteArray);
@@ -104,6 +105,7 @@ public class JavaImage implements Image {
      * Creates an image from the supplied image file.
      *
      * @param aImageFile An image file
+     * @throws IOException If there is trouble reading the image
      */
     public JavaImage(final File aImageFile) throws IOException {
         final ImageInputStream input = ImageIO.createImageInputStream(aImageFile);

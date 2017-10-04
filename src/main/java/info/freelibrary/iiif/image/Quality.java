@@ -28,7 +28,7 @@ public enum Quality {
      *
      * @param aValue A quality string value
      * @return An image Quality
-     * @throws UnsupportedFormatException If the supplied string value is not one of the supported Quality values
+     * @throws UnsupportedQualityException If the supplied string value is not one of the supported Quality values
      */
     public static Quality parse(final String aValue) throws UnsupportedQualityException {
         final Quality[] values = values();

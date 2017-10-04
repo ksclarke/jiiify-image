@@ -81,6 +81,7 @@ public class Region {
      * Creates a new image region object from the supplied IIIF URI image region string.
      *
      * @param aRegionString A region string from a IIIF URI
+     * @return This region
      * @throws InvalidRegionException If the supplied string isn't a valid representation of a IIIF region
      */
     public static Region parse(final String aRegionString) throws InvalidRegionException {

@@ -156,6 +156,7 @@ public final class ImageUtils {
      * @param aImageFile A file from which to pull dimension
      * @return An image dimension
      * @throws IOException If there is trouble reading the dimensions from the supplied image file
+     * @throws UnsupportedFormatException If the file's extension doesn't map to a known format
      */
     public static Dimension getImageDimension(final File aImageFile) throws IOException, UnsupportedFormatException {
         final String mimeType = Format.getMimeType(FileUtils.getExt(aImageFile.getName()));
@@ -205,6 +206,7 @@ public final class ImageUtils {
      * @param aImageFile A source image file
      * @return An image region representing the center of the image
      * @throws IOException If there is trouble reading the source image file
+     * @throws UnsupportedFormatException If the file's extension doesn't map to a known format
      */
     public static Region getCenter(final File aImageFile) throws IOException, UnsupportedFormatException {
         return getCenter(getImageDimension(aImageFile));

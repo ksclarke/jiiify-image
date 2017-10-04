@@ -45,6 +45,7 @@ public class Size {
      * Creates a new image size object from the supplied percentage.
      *
      * @param aPercent A percent of the image
+     * @throws InvalidSizeException If the supplied percent is not between one and 360 degrees
      */
     public Size(final int aPercent) throws InvalidSizeException {
         isPercentage = true;
@@ -66,6 +67,7 @@ public class Size {
      * Creates a new image size object from the supplied IIIF URI width and height string.
      *
      * @param aSizeString A IIIF URI string with width and height
+     * @return This size
      * @throws InvalidSizeException If the supplied string isn't a valid height and width representation
      */
     public static Size parse(final String aSizeString) throws InvalidSizeException {
