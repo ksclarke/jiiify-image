@@ -1,0 +1,35 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+env:
+  global:
+    - secure: "RYQemsIceB/t+elIqLZM4tXPrUUHSLfwCRX3zwdzKGSPQtYx+ccHoNOmSnbutrwuheAhZhb8PGOp166Z2D9GTXNSF9iS8t3iqAr9G9E9bTkcPOOesZzHm1YZU2fds8rGm+hGBlSY3A5i7Al0tMXY5M6TcJbg50nqR+g429G0Ihm8EqXWZ9GmFQQ+Jw2qx8kpakDnwJEZn+YJwtdxNDVqZ2UBPwBCOpWoQu13EeH5VQ/W2r+KezBKma5kkCl03dvJeekariwAElyl6BpsbJKTfTNoOf2ML9551Megn7N/XYhXOYxL8fhRnCDG6A3XCHVttVsZiyLUZII7iOdGLkbLOvjq+DInTUvHKzMhMIcs5naDOZLRXeTteS/xtKTYcTNSaQ6J9FVRrB/4tRPaAdKaRumn/gLkyPybYL/vXps97usDsv6NsHJGMMdQaCFIEtJhzu3nZygEdHQG+2R8HPskBJFgDFVz9q1OJR7YiDJrjFI7jnr37HA3+xwHE6zfpA8NsC6zOUaeHNRWFin4a/IcUctzfZWcLw4+Neer4pprU3TlxmBY8pXCkj5OdEpgNjbDqK04knehDn6d/B75NGg9s/P9uG9Gw1UU8uaMe7KJVhKsV4mAKTZMqbBDo+vKgayPJ7eTahgf0NNqKCA0wQ35hV+rWaThA8eaeaxdF48ZEMc="
+
+install:
+  mvn validate
+
+script:
+  mvn install
+
+after_success:
+  - mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml -DprojectToken="${PROJECT_TOKEN}" -DapiToken="${API_TOKEN}"
+
+cache:
+  directories:
+    - $HOME/.m2
+
+notifications:
+  email:
+    recipients:
+      - ksclarke@ksclarke.io
+    on_failure: change
+    on_success: never
+  irc:
+    channels:
+      - irc.freenode.org#freelibrary
+    on_failure: always
+    on_success: always
+
+sudo: false

@@ -1,0 +1,8 @@
+# Maven build artifacts
+target/
+
+# Directory for generated code
+src/main/generated
+
+# Test images which are downloaded on demand from S3
+src/test/resources/images
