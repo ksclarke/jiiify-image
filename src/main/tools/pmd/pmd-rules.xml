@@ -5,8 +5,11 @@
   <description>FreeLibrary PMD Rules</description>
 
   <exclude-pattern>.*/test/.*</exclude-pattern>
+  <exclude-pattern>.*/generated/.*</exclude-pattern>
   <rule ref="rulesets/java/android.xml" />
-  <rule ref="rulesets/java/basic.xml" />
+  <rule ref="rulesets/java/basic.xml">
+    <exclude name="AvoidUsingOctalValues" />
+  </rule>
   <rule ref="rulesets/java/braces.xml" />
   <rule ref="rulesets/java/clone.xml" />
   <rule ref="rulesets/java/codesize.xml">
@@ -17,15 +20,25 @@
   </rule>
   <rule ref="rulesets/java/codesize.xml/TooManyMethods">
     <properties>
-      <property name="maxmethods" value="18" />
+      <property name="maxmethods" value="15" />
     </properties>
   </rule>
   <rule ref="rulesets/java/design.xml">
     <exclude name="GodClass" />
+    <exclude name="AccessorMethodGeneration" />
+    <exclude name="AccessorClassGeneration" />
+    <exclude name="ConfusingTernary" />
+  </rule>
+  <rule ref="rulesets/java/design.xml/AvoidDeeplyNestedIfStmts">
+    <properties>
+      <property name="problemDepth" value="5" />
+    </properties>
   </rule>
   <rule ref="rulesets/java/empty.xml" />
   <rule ref="rulesets/java/finalizers.xml" />
-  <rule ref="rulesets/java/imports.xml" />
+  <rule ref="rulesets/java/imports.xml">
+    <exclude name="TooManyStaticImports" />
+  </rule>
   <rule ref="rulesets/java/junit.xml" />
   <rule ref="rulesets/java/migrating.xml" />
   <rule ref="rulesets/java/naming.xml">
@@ -41,7 +54,9 @@
       <property name="minimum" value="25" />
     </properties>
   </rule>
-  <rule ref="rulesets/java/optimizations.xml" />
+  <rule ref="rulesets/java/optimizations.xml">
+    <exclude name="AvoidInstantiatingObjectsInLoops" />
+  </rule>
   <rule ref="rulesets/java/strictexception.xml" />
   <rule ref="rulesets/java/strings.xml" />
   <rule ref="rulesets/java/sunsecure.xml" />
