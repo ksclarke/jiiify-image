@@ -27,7 +27,7 @@ And another example:
     final Request request = Request.parse("/iiif/ASDF123/0,0,1000,1000/500,500/45/default.jpg");
     final Format format = request.getFormat();
 
-    image.transform(request).write(format, new File("tif-transfored." + format.getExtension());
+    image.transform(request).write(format, new File("tif-transformed." + format.getExtension());
 
 ### Getting Started
 
