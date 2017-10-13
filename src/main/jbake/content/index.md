@@ -14,8 +14,9 @@ $version = xmlhttp.responseText;
 </script>
 
 ## Using Jiiify Image
+<p/>
 
-To use the jiiify-image library, reference it in your project's `pom.xml` file.
+To use the jiiify-image library, reference it in your project's `pom.xml` file:
 
 <pre><code>&lt;dependency&gt;
   &lt;groupId&gt;info.freelibrary&lt;/groupId&gt;
@@ -30,9 +31,10 @@ To use the jiiify-image library, reference it in your project's `pom.xml` file.
 document.write($version);</script><noscript>${version}</noscript>&apos;</code></pre>
 <p/>
 
-## Building FreeLib-Utils
+## Building Jiiify Image
+<p/>
 
-To build the project, you need a [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) environment with [Maven](http://maven.apache.org/) installed on your system.
+To build the project, you need a [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) environment with [Maven](http://maven.apache.org/) installed on your system. Once you have that, download the jiiify-image source code:
 
     git clone https://github.com/ksclarke/jiiify-image.git
     cd jiiify-image
@@ -45,4 +47,4 @@ To build the project, you need a [JDK 8](http://www.oracle.com/technetwork/java/
 
     mvn javadoc:javadoc
 
-<br/>For more information, consult the "Docs" dropdown in the navigation menu at the top of this page.
+<br/>To view the documentation online, check the `Documentation` drop down at the top of this page.
