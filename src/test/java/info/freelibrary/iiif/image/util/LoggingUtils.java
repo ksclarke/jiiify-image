@@ -3,7 +3,7 @@ package info.freelibrary.iiif.image.util;
 
 import static info.freelibrary.iiif.image.util.TestConstants.BUNDLE_NAME;
 
-import info.freelibrary.iiif.image.MessageCodes;
+import info.freelibrary.iiif.image.util.MessageCodes;
 import info.freelibrary.util.Logger;
 import info.freelibrary.util.LoggerFactory;
 
