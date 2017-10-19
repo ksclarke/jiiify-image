@@ -39,7 +39,7 @@
   </developers>
 
   <properties>
-    <freelib-utils.version>0.8.5</freelib-utils.version>
+    <freelib.utils.version>0.8.5</freelib.utils.version>
     <twelvemonkeys.version>3.3.2</twelvemonkeys.version>
     <imgscalr.version>4.2</imgscalr.version>
     <jackson.version>2.7.4</jackson.version>
@@ -58,7 +58,7 @@
     <dependency>
       <groupId>info.freelibrary</groupId>
       <artifactId>freelib-utils</artifactId>
-      <version>${freelib-utils.version}</version>
+      <version>${freelib.utils.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -127,7 +127,7 @@
       <plugin>
         <groupId>info.freelibrary</groupId>
         <artifactId>freelib-utils</artifactId>
-        <version>${freelib-utils.version}</version>
+        <version>${freelib.utils.version}</version>
         <executions>
           <execution>
             <phase>process-resources</phase>
