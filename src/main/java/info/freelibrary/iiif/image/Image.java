@@ -4,6 +4,7 @@ package info.freelibrary.iiif.image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import info.freelibrary.iiif.image.api.Format;
 import info.freelibrary.iiif.image.api.Quality;
@@ -14,8 +15,6 @@ import info.freelibrary.iiif.image.api.Size;
 
 /**
  * A IIIF image.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public interface Image {
 
@@ -34,6 +33,31 @@ public interface Image {
      * @throws IOException If there is trouble reading the image data
      */
     int getHeight() throws IOException;
+
+    /**
+     * Gets the center of the image.
+     *
+     * @return An image region representing the center of the image
+     * @throws IOException If there is trouble reading image for center dimensions
+     */
+    Region getCenter() throws IOException;
+
+    /**
+     * Gets the ratio of the image's width and height.
+     *
+     * @return A string representation of the aspect ratio
+     * @throws IOException If there is trouble reading image for aspect ration
+     */
+    String getAspectRatio() throws IOException;
+
+    /**
+     * Gets the scale factors for the image.
+     *
+     * @param aTileSize A tile size
+     * @return The scale factors for the image using the supplied tile size
+     * @throws IOException If there is trouble reading image for scale factors
+     */
+    List<Integer> getScaleFactors(int aTileSize) throws IOException;
 
     /**
      * Frees any system resources alloted to the image.

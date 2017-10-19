@@ -5,8 +5,6 @@ import java.util.Locale;
 
 /**
  * An exception thrown when there is an unsupported IIIF quality.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class UnsupportedQualityException extends ImageException {
 

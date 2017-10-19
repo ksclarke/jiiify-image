@@ -16,8 +16,6 @@ import info.freelibrary.iiif.image.util.Constants;
 
 /**
  * A profile description.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Profile {

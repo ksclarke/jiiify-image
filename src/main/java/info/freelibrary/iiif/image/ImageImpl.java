@@ -6,8 +6,6 @@ import java.io.IOException;
 
 /**
  * Supported image types.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public enum ImageImpl {
     JAVA {

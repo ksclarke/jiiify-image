@@ -5,8 +5,6 @@ import java.util.Locale;
 
 /**
  * An exception thrown when a supplied value is not a valid IIIF rotation.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class InvalidRotationException extends ImageException {
 

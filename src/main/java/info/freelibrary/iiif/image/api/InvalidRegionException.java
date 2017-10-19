@@ -5,8 +5,6 @@ import java.util.Locale;
 
 /**
  * An exception thrown when there is an issue with an invalid IIIF region.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class InvalidRegionException extends ImageException {
 

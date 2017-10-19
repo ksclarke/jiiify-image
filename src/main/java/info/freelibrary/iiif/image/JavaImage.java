@@ -45,10 +45,8 @@ import info.freelibrary.util.LoggerFactory;
 
 /**
  * A native Java IIIF image implementation.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class JavaImage implements Image {
+public class JavaImage extends AbstractImage implements Image {
 
     private static final float DEFAULT_GIF_QUALITY = 0.7f;
 

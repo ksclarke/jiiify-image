@@ -9,8 +9,6 @@ import info.freelibrary.util.I18nRuntimeException;
 
 /**
  * A runtime exception for the IIIF environment.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class IIIFRuntimeException extends I18nRuntimeException {
 

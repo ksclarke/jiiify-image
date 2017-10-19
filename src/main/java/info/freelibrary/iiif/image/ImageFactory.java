@@ -6,8 +6,6 @@ import java.io.IOException;
 
 /**
  * A factory to create image objects.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class ImageFactory {
 

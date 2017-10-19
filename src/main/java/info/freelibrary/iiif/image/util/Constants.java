@@ -3,8 +3,6 @@ package info.freelibrary.iiif.image.util;
 
 /**
  * A class of constant values used in the IIIF image library.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public final class Constants {
 

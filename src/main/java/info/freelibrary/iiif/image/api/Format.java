@@ -12,8 +12,6 @@ import info.freelibrary.util.StringUtils;
 
 /**
  * An image format that represents the types of image formats supported by IIIF.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public enum Format {
 

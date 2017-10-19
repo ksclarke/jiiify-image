@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * A physical dimension service.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 @JsonPropertyOrder({ PhysicalDimConstants.CONTEXT_PROPERTY, PhysicalDimConstants.PROFILE_PROPERTY,
     PhysicalDimConstants.PHYSICAL_SCALE, PhysicalDimConstants.PHYSICAL_UNITS })

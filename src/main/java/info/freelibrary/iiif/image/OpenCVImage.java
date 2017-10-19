@@ -14,10 +14,8 @@ import info.freelibrary.iiif.image.api.Size;
 
 /**
  * An OpenCV image implementation. Note that this is not yet implemented.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
-public class OpenCVImage implements Image {
+public class OpenCVImage extends AbstractImage implements Image {
 
     /**
      * Creates an OpenCVImage from the supplied image byte array.
