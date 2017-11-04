@@ -6,11 +6,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import info.freelibrary.iiif.image.api.APIComplianceLevel;
-import info.freelibrary.iiif.image.api.Format;
-import info.freelibrary.iiif.image.api.ImageInfo;
-import info.freelibrary.iiif.image.api.Profile;
-import info.freelibrary.iiif.image.api.Quality;
 import info.freelibrary.iiif.image.util.Constants;
 
 import io.vertx.core.json.JsonArray;
@@ -27,6 +22,21 @@ public class ProfileTest {
         myExpected = new JsonObject().put(Constants.CONTEXT, Constants.CONTEXT_URI).put(Constants.ID, ID);
         myExpected.put(Constants.TYPE, Constants.TYPE_VALUE).put(Constants.PROTOCOL, Constants.PROTOCOL_URI);
         myExpected.put(Constants.WIDTH, 0).put(Constants.HEIGHT, 0);
+    }
+
+    @Test
+    public void testFeature() {
+        assertEquals(18, Profile.Feature.values().length);
+    }
+
+    @Test
+    public void testGetFormats() {
+        assertEquals(0, new Profile(APIComplianceLevel.ZERO).getFormats().size());
+    }
+
+    @Test
+    public void testGetLevel() {
+        assertEquals(APIComplianceLevel.ZERO.toString(), new Profile(APIComplianceLevel.ZERO).getLevel());
     }
 
     @Test

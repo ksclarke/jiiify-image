@@ -67,6 +67,16 @@ public interface Image {
     Image free();
 
     /**
+     * Reverts the image to its initial state, assuming it was created with caching allowed. If it was created without
+     * caching allowed, then an UnsupportedOperationException is thrown.
+     *
+     * @return The image object
+     * @throws IOException If there is trouble reverting the image
+     * @throws UnsupportedOperationException If the image was originally created without the cache flag set
+     */
+    Image revert() throws IOException, UnsupportedOperationException;
+
+    /**
      * Transforms the image according to the IIIF request.
      *
      * @param aRequest A IIIF request

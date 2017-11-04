@@ -46,6 +46,7 @@ import info.freelibrary.util.LoggerFactory;
 /**
  * A native Java IIIF image implementation.
  */
+@SuppressWarnings("PMD.TooManyMethods")
 public class JavaImage extends AbstractImage implements Image {
 
     private static final float DEFAULT_GIF_QUALITY = 0.7f;
@@ -63,10 +64,14 @@ public class JavaImage extends AbstractImage implements Image {
 
     private BufferedImage myImage;
 
+    private BufferedImage myOriginalImage;
+
     @SuppressWarnings("all")
     private IIOMetadata myMetadata;
 
     private String myFormat;
+
+    private boolean myBufferedImageCached;
 
     /**
      * Creates an image from the supplied byte array.
@@ -75,6 +80,17 @@ public class JavaImage extends AbstractImage implements Image {
      * @throws IOException If there is trouble reading the image
      */
     public JavaImage(final byte[] aImageByteArray) throws IOException {
+        this(aImageByteArray, false);
+    }
+
+    /**
+     * Creates an image from the supplied byte array.
+     *
+     * @param aImageByteArray An image byte array
+     * @param aCachedImage If the original image is cached in memory before transformation
+     * @throws IOException If there is trouble reading the image
+     */
+    public JavaImage(final byte[] aImageByteArray, final boolean aCachedImage) throws IOException {
         final ByteArrayInputStream inStream = new ByteArrayInputStream(aImageByteArray);
         final ImageInputStream input = ImageIO.createImageInputStream(inStream);
         final Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
@@ -84,11 +100,10 @@ public class JavaImage extends AbstractImage implements Image {
 
             try {
                 reader.setInput(input);
+
                 myImage = reader.read(0);
                 myFormat = reader.getFormatName();
                 myMetadata = reader.getImageMetadata(0);
-            } catch (final IllegalArgumentException details) {
-                throw new IIIFRuntimeException(details);
             } finally {
                 reader.dispose();
                 input.close();
@@ -97,6 +112,10 @@ public class JavaImage extends AbstractImage implements Image {
 
         if (myImage == null) {
             throw new IOException(LOGGER.getMessage(MessageCodes.EXC_072));
+        }
+
+        if (aCachedImage) {
+            myOriginalImage = copyBufferedImage(myImage);
         }
     }
 
@@ -107,23 +126,32 @@ public class JavaImage extends AbstractImage implements Image {
      * @throws IOException If there is trouble reading the image
      */
     public JavaImage(final File aImageFile) throws IOException {
+        this(aImageFile, false);
+    }
+
+    /**
+     * Creates an image from the supplied image file.
+     *
+     * @param aImageFile An image file
+     * @param aCachedImage If the original image is cached in memory before transformation
+     * @throws IOException If there is trouble reading the image
+     */
+    public JavaImage(final File aImageFile, final boolean aCachedImage) throws IOException {
         final ImageInputStream input = ImageIO.createImageInputStream(aImageFile);
         final Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
 
         if (readers.hasNext()) {
             myReader = readers.next();
-
-            try {
-                myReader.setInput(input);
-                myFormat = myReader.getFormatName();
-            } catch (final IllegalArgumentException details) {
-                myReader.dispose();
-                throw new IIIFRuntimeException(details);
-            }
+            myReader.setInput(input);
+            myFormat = myReader.getFormatName();
         }
 
         if (myReader == null) {
             throw new IIIFRuntimeException(MessageCodes.EXC_026, aImageFile);
+        }
+
+        if (aCachedImage) {
+            myBufferedImageCached = aCachedImage;
         }
     }
 
@@ -132,8 +160,22 @@ public class JavaImage extends AbstractImage implements Image {
      *
      * @param aCacheRequired Whether a file system cache should be used when reading and writing images
      */
-    public static final void setUseCache(final boolean aCacheRequired) {
+    public static final void setUseFSCache(final boolean aCacheRequired) {
         ImageIO.setUseCache(aCacheRequired);
+    }
+
+    @Override
+    public Image revert() throws IOException, UnsupportedOperationException {
+        if (myOriginalImage != null) {
+            free();
+            myImage = copyBufferedImage(myOriginalImage);
+        } else if (myBufferedImageCached) {
+            LOGGER.warn(MessageCodes.WARN_026);
+        } else {
+            throw new UnsupportedOperationException(MessageCodes.EXC_088);
+        }
+
+        return this;
     }
 
     @Override
@@ -155,6 +197,11 @@ public class JavaImage extends AbstractImage implements Image {
         if (myImage != null) {
             myImage.flush();
             myImage.getGraphics().dispose();
+        }
+
+        if (myOriginalImage != null) {
+            myOriginalImage.flush();
+            myOriginalImage.getGraphics().dispose();
         }
 
         return this;
@@ -435,9 +482,29 @@ public class JavaImage extends AbstractImage implements Image {
         if (myImage == null) {
             myImage = myReader.read(0);
             myMetadata = myReader.getImageMetadata(0);
+
+            if (myBufferedImageCached) {
+                myOriginalImage = copyBufferedImage(myImage);
+            }
         }
 
         return myImage;
     }
 
+    /**
+     * Copies a BufferedImage.
+     *
+     * @param aImage A BufferedImage to be copied
+     * @return A new BufferedImage
+     * @throws IOException If there is trouble copying the image
+     */
+    private BufferedImage copyBufferedImage(final BufferedImage aImage) throws IOException {
+        final BufferedImage image = new BufferedImage(aImage.getWidth(), aImage.getHeight(), aImage.getType());
+        final Graphics2D graphics = image.createGraphics();
+
+        graphics.drawImage(aImage, 0, 0, null);
+        graphics.dispose();
+
+        return image;
+    }
 }

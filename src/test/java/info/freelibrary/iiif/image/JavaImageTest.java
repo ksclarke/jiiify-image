@@ -2,6 +2,7 @@
 package info.freelibrary.iiif.image;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 
 import java.io.ByteArrayOutputStream;
@@ -11,9 +12,11 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
-import info.freelibrary.iiif.image.JavaImage;
 import info.freelibrary.iiif.image.api.Format;
 import info.freelibrary.iiif.image.api.InvalidRotationException;
 import info.freelibrary.iiif.image.api.Quality;
@@ -28,6 +31,71 @@ import info.freelibrary.iiif.image.api.Size;
  * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class JavaImageTest {
+
+    private static final File FAKE_FILE = new File("src/test/resources/fake.xyz");
+
+    @Test
+    public void testRevert() throws IOException {
+        final JavaImage image = new JavaImage(TestResource.TEST_TIF, true);
+
+        image.resizeTo(new Size(1000, 1000));
+        assertEquals(1000, image.getWidth());
+
+        image.revert();
+        assertEquals(2000, image.getWidth());
+    }
+
+    @Test
+    public void testRevertNotBuffered() throws IOException {
+        final JavaImage image = new JavaImage(TestResource.TEST_TIF, true);
+        image.revert();
+    }
+
+    @Test
+    public void testFreeNotBuffered() throws IOException {
+        final JavaImage image = new JavaImage(TestResource.TEST_TIF, true);
+        image.free();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNullInput() throws IOException {
+        new JavaImage((File) null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullInputBA() throws IOException {
+        new JavaImage((byte[]) null);
+    }
+
+    @Test
+    public void testSetUseFSCache() {
+        final boolean cacheSet = ImageIO.getUseCache();
+
+        ImageIO.setUseCache(true);
+        JavaImage.setUseFSCache(false);
+
+        assertFalse(ImageIO.getUseCache());
+
+        ImageIO.setUseCache(cacheSet);
+    }
+
+    @Test(expected = IIIFRuntimeException.class)
+    public void testNoReader() throws IOException {
+        new JavaImage(FAKE_FILE);
+    }
+
+    @Test(expected = IOException.class)
+    public void testNoReaderBA() throws IOException {
+        new JavaImage(FileUtils.readFileToByteArray(FAKE_FILE));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void testRevertUOE() throws IOException {
+        final JavaImage image = new JavaImage(TestResource.TEST_TIF);
+
+        image.resizeTo(new Size(1000, 1000));
+        image.revert();
+    }
 
     @Test
     public void testJavaImageByteArray() throws IOException {
@@ -71,11 +139,27 @@ public class JavaImageTest {
     }
 
     @Test
+    public void testExtractFull() throws IOException {
+        final JavaImage expected = new JavaImage(TestResource.TEST_EXTRACTED);
+        final JavaImage image = new JavaImage(TestResource.TEST_EXTRACTED);
+
+        assertEquals(expected, image.extract(new Region()));
+    }
+
+    @Test
     public void testResize() throws IOException {
         final JavaImage image = new JavaImage(TestResource.TEST_TIF);
         final JavaImage expected = new JavaImage(TestResource.TEST_RESIZED);
 
         assertEquals(expected, image.resizeTo(new Size(1000, 1000)));
+    }
+
+    @Test
+    public void testResizeFull() throws IOException {
+        final JavaImage image = new JavaImage(TestResource.TEST_RESIZED);
+        final JavaImage expected = new JavaImage(TestResource.TEST_RESIZED);
+
+        assertEquals(expected, image.resizeTo(new Size()));
     }
 
     @Test
@@ -87,6 +171,14 @@ public class JavaImageTest {
     }
 
     @Test
+    public void testRotateFull() throws IOException, InvalidRotationException {
+        final JavaImage image = new JavaImage(TestResource.TEST_EXTRACTED);
+        final JavaImage expected = new JavaImage(TestResource.TEST_EXTRACTED);
+
+        assertEquals(expected, image.rotateTo(new Rotation()));
+    }
+
+    @Test
     public void testRotateTransform() throws IOException, InvalidRotationException {
         final JavaImage image = new JavaImage(TestResource.TEST_EXTRACTED);
         final JavaImage expected = new JavaImage(TestResource.TEST_ROTATED_45);
@@ -95,15 +187,24 @@ public class JavaImageTest {
     }
 
     @Test
-    public void testAdjustGray() throws IOException, InvalidRotationException {
+    public void testAdjustGray() throws IOException {
         final JavaImage image = new JavaImage(TestResource.TEST_EXTRACTED);
         final JavaImage expected = new JavaImage(TestResource.TEST_ADJUST_GRAY);
 
+        // FIXME: This fails on OpenJDK (instead of OracleJDK)
         assertEquals(expected, image.adjust(Quality.GRAY));
     }
 
     @Test
-    public void testAdjustBitonal() throws IOException, InvalidRotationException {
+    public void testAdjustDefault() throws IOException {
+        final JavaImage image = new JavaImage(TestResource.TEST_EXTRACTED);
+        final JavaImage expected = new JavaImage(TestResource.TEST_EXTRACTED);
+
+        assertEquals(expected, image.adjust(Quality.DEFAULT));
+    }
+
+    @Test
+    public void testAdjustBitonal() throws IOException {
         final JavaImage image = new JavaImage(TestResource.TEST_EXTRACTED);
         final JavaImage expected = new JavaImage(TestResource.TEST_ADJUST_BITONAL);
 
@@ -136,6 +237,14 @@ public class JavaImageTest {
         final JavaImage image2 = new JavaImage(TestResource.TEST_RESIZED);
 
         assertNotEquals(image1, image2);
+    }
+
+    @Test
+    public void testEqualsDifferentObjects() throws IOException {
+        final JavaImage image = new JavaImage(TestResource.TEST_EXTRACTED);
+        final Object object = new Object();
+
+        assertNotEquals(image, object);
     }
 
     @Test

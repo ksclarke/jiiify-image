@@ -22,7 +22,7 @@ public class InvalidRegionExceptionTest {
     private Locale myDefaultLocale;
 
     /**
-     * Sets up the tests of <code></code>.
+     * Sets up the tests of <code>InvalidRegionException</code>.
      *
      * @throws Exception If the test set up fails
      */
@@ -33,7 +33,7 @@ public class InvalidRegionExceptionTest {
     }
 
     /**
-     * Tears down the tests of <code></code>.
+     * Tears down the tests of <code>InvalidRegionException</code>.
      *
      * @throws Exception If the test tear down fails
      */

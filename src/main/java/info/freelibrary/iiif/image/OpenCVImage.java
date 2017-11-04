@@ -28,12 +28,34 @@ public class OpenCVImage extends AbstractImage implements Image {
     }
 
     /**
+     * Creates an OpenCVImage from the supplied image byte array.
+     *
+     * @param aImageByteArray An image byte array
+     * @param aCachedImage If the original image is cached in memory before transformation
+     */
+    @SuppressWarnings("PMD")
+    public OpenCVImage(final byte[] aImageByteArray, final boolean aCachedImage) {
+
+    }
+
+    /**
      * Creates an OpenCVImage from the supplied image file.
      *
      * @param aImageFile An image file
      */
     @SuppressWarnings("PMD")
     public OpenCVImage(final File aImageFile) {
+
+    }
+
+    /**
+     * Creates an OpenCVImage from the supplied image file.
+     *
+     * @param aImageFile An image file
+     * @param aCachedImage If the original image is cached in memory before transformation
+     */
+    @SuppressWarnings("PMD")
+    public OpenCVImage(final File aImageFile, final boolean aCachedImage) {
 
     }
 
@@ -49,6 +71,11 @@ public class OpenCVImage extends AbstractImage implements Image {
 
     @Override
     public Image free() {
+        return null;
+    }
+
+    @Override
+    public Image revert() {
         return null;
     }
 
