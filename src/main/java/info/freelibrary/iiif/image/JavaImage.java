@@ -172,7 +172,7 @@ public class JavaImage extends AbstractImage implements Image {
         } else if (myBufferedImageCached) {
             LOGGER.warn(MessageCodes.WARN_026);
         } else {
-            throw new UnsupportedOperationException(MessageCodes.EXC_088);
+            throw new UnsupportedOperationException(LOGGER.getMessage(MessageCodes.EXC_088));
         }
 
         return this;
