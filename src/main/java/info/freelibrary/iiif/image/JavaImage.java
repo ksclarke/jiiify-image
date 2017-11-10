@@ -11,6 +11,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -499,12 +501,9 @@ public class JavaImage extends AbstractImage implements Image {
      * @throws IOException If there is trouble copying the image
      */
     private BufferedImage copyBufferedImage(final BufferedImage aImage) throws IOException {
-        final BufferedImage image = new BufferedImage(aImage.getWidth(), aImage.getHeight(), aImage.getType());
-        final Graphics2D graphics = image.createGraphics();
+        final WritableRaster raster = aImage.copyData(aImage.getRaster().createCompatibleWritableRaster());
+        final ColorModel colorModel = aImage.getColorModel();
 
-        graphics.drawImage(aImage, 0, 0, null);
-        graphics.dispose();
-
-        return image;
+        return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), null);
     }
 }
