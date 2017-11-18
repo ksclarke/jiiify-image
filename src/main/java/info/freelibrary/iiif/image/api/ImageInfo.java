@@ -10,6 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -29,6 +30,8 @@ public class ImageInfo {
 
     public static final String FILE_NAME = "info.json";
 
+    public static final String MIME_TYPE = "application/json";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageInfo.class, BUNDLE_NAME);
 
     private String myID;
@@ -38,6 +41,10 @@ public class ImageInfo {
     private int myHeight;
 
     private int myTileSize;
+
+    private List<Size> mySizes;
+
+    private List<TileSet> myTiles;
 
     private List<Service> myServices;
 
@@ -117,6 +124,53 @@ public class ImageInfo {
     @JsonGetter(Constants.HEIGHT)
     public int getHeight() {
         return myHeight;
+    }
+
+    /**
+     * Add a set of square tiles, specified using width and tiling scale factors.
+     *
+     * @param aWidth A tile width
+     * @param aScaleFactors A list of tiling scale factors
+     * @return The image info
+     */
+    @JsonIgnore
+    public ImageInfo addTile(final int aWidth, final List<Integer> aScaleFactors) {
+        if (!getTiles().add(new TileSet(aWidth, aScaleFactors))) {
+            throw new UnsupportedOperationException();
+        }
+
+        return this;
+    }
+
+    /**
+     * Add a set of tiles, specified using width and tiling scale factors.
+     *
+     * @param aWidth A tile width
+     * @param aHeight A tile height
+     * @param aScaleFactors A list of tiling scale factors
+     * @return The image info
+     */
+    @JsonIgnore
+    public ImageInfo addTile(final int aWidth, final int aHeight, final List<Integer> aScaleFactors) {
+        if (!getTiles().add(new TileSet(aWidth, aHeight, aScaleFactors))) {
+            throw new UnsupportedOperationException();
+        }
+
+        return this;
+    }
+
+    /**
+     * Gets the image info tiles.
+     *
+     * @return The image info tiles
+     */
+    @JsonGetter(Constants.TILES)
+    public List<TileSet> getTiles() {
+        if (myTiles == null) {
+            myTiles = new ArrayList<TileSet>();
+        }
+
+        return myTiles;
     }
 
     /**
@@ -243,6 +297,61 @@ public class ImageInfo {
     }
 
     /**
+     * Gets the image info sizes.
+     *
+     * @return The image info sizes
+     */
+    @JsonGetter(Constants.SIZES)
+    public List<Size> getSizes() {
+        if (mySizes == null) {
+            mySizes = new ArrayList<Size>();
+        }
+
+        return mySizes;
+    }
+
+    /**
+     * Sets the image info sizes.
+     *
+     * @return The image info
+     */
+    @JsonSetter(Constants.SIZES)
+    public ImageInfo setSizes(final List<Size> aSizesList) {
+        mySizes = aSizesList;
+
+        return this;
+    }
+
+    /**
+     * Adds a size with width.
+     *
+     * @param aWidth A width of a size to add
+     * @return The image info
+     */
+    public ImageInfo addSize(final int aWidth) {
+        if (!getSizes().add(new Size(aWidth, 0))) {
+            throw new UnsupportedOperationException();
+        }
+
+        return this;
+    }
+
+    /**
+     * Adds a size with width and height.
+     *
+     * @param aWidth A width of a size to add
+     * @param aHeight A height of a size to add
+     * @return The image info
+     */
+    public ImageInfo addSize(final int aWidth, final int aHeight) {
+        if (!getSizes().add(new Size(aWidth, aHeight))) {
+            throw new UnsupportedOperationException();
+        }
+
+        return this;
+    }
+
+    /**
      * Structures our service in IIIF-friendly friendly way.
      *
      * @return A service to be converted into JSON
@@ -262,4 +371,81 @@ public class ImageInfo {
         return result;
     }
 
+    /**
+     * The information one would need to create a set of tiles.
+     */
+    @JsonInclude(value = Include.NON_DEFAULT)
+    @JsonPropertyOrder({ Constants.WIDTH, Constants.HEIGHT, Constants.SCALE_FACTORS })
+    public class TileSet {
+
+        private final int myWidth;
+
+        private final int myHeight;
+
+        private final List<Integer> myScaleFactors;
+
+        /**
+         * Creates a new representation of a tile set.
+         *
+         * @param aWidth The tile width
+         * @param aHeight The tile height
+         * @param aScaleFactors Scale factors used for creating tiles
+         */
+        public TileSet(final int aWidth, final int aHeight, final List<Integer> aScaleFactors) {
+            myWidth = aWidth;
+            myHeight = aHeight;
+            myScaleFactors = aScaleFactors;
+        }
+
+        /**
+         * Creates a new representation of a square tile set.
+         *
+         * @param aWidth The tile width (and height since it's square)
+         * @param aScaleFactors Scale factors used for creating tiles
+         */
+        public TileSet(final int aWidth, final List<Integer> aScaleFactors) {
+            myWidth = aWidth;
+            myHeight = aWidth;
+            myScaleFactors = aScaleFactors;
+        }
+
+        /**
+         * Gets the tile width.
+         *
+         * @return The tile width
+         */
+        public int getWidth() {
+            return myWidth;
+        }
+
+        /**
+         * Gets the tile height.
+         *
+         * @return The tile height
+         */
+        @JsonIgnore
+        public int getHeight() {
+            return myHeight;
+        }
+
+        /**
+         * The scale factors to be used when creating tiles.
+         *
+         * @return A list of scale factors
+         */
+        public List<Integer> getScaleFactors() {
+            return myScaleFactors;
+        }
+
+        /**
+         * We want more control over how this gets output in the JSON so we've "overriding" the default get for
+         * height.
+         *
+         * @return The tile height or nothing if it's equal to the tile's width
+         */
+        @JsonGetter(Constants.HEIGHT)
+        private int getJsonHeight() {
+            return myHeight == myWidth ? 0 : myHeight;
+        }
+    }
 }

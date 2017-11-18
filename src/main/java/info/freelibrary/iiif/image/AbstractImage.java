@@ -77,6 +77,10 @@ abstract class AbstractImage {
             scaleFactors.add(multiplier);
         }
 
+        if (scaleFactors.isEmpty()) {
+            scaleFactors.add(1);
+        }
+
         return scaleFactors;
     }
 

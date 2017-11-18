@@ -1,0 +1,12 @@
+{
+  "@context" : "http://iiif.io/api/image/2/context.json",
+  "@id" : "https://example.org/iiif/ark:%2F21198%2Fz1p84cpw",
+  "@type" : "iiif:Image",
+  "protocol" : "http://iiif.io/api/image",
+  "width" : 6300,
+  "height" : 4500,
+  "tiles" : [ {
+    "width" : 1024,
+    "scaleFactors" : [ 1, 2, 4, 8, 16 ]
+  } ]
+}

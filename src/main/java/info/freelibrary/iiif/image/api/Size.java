@@ -3,6 +3,10 @@ package info.freelibrary.iiif.image.api;
 
 import static info.freelibrary.iiif.image.util.Constants.BUNDLE_NAME;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import info.freelibrary.iiif.image.util.Constants;
 import info.freelibrary.iiif.image.util.MessageCodes;
 import info.freelibrary.util.Logger;
@@ -11,6 +15,8 @@ import info.freelibrary.util.LoggerFactory;
 /**
  * IIIF image size.
  */
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonPropertyOrder({ Constants.WIDTH, Constants.HEIGHT })
 public class Size {
 
     public static final String FULL = "full";
@@ -163,6 +169,7 @@ public class Size {
      *
      * @return The percent of the image size request as an integer
      */
+    @JsonIgnore
     public int getPercentage() {
         return myPercentage;
     }
@@ -172,6 +179,7 @@ public class Size {
      *
      * @return True if this image size request is for the full size of the image
      */
+    @JsonIgnore
     public boolean isFullSize() {
         return mySizeIsPercentage && (myPercentage == 100);
     }
@@ -220,6 +228,7 @@ public class Size {
      *
      * @return True if a scaled response is acceptable; else, false
      */
+    @JsonIgnore
     public boolean isScalable() {
         return mySizeIsScalable;
     }
@@ -262,6 +271,7 @@ public class Size {
      * @param aImageWidth The image's actual width in pixels
      * @return The computed height of the image request
      */
+    @JsonIgnore
     public int getHeight(final int aImageHeight, final int aImageWidth) {
         final int height;
 
@@ -297,6 +307,7 @@ public class Size {
      * @param aImageHeight The image's actual height in pixels
      * @return The computed width of the image request
      */
+    @JsonIgnore
     public int getWidth(final int aImageWidth, final int aImageHeight) {
         final int width;
 
