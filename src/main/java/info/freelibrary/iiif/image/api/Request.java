@@ -38,6 +38,16 @@ public class Request implements Cloneable {
     private Format myFormat;
 
     /**
+     * Creates a simple IIIF image request object for an image.
+     *
+     * @param aID An ID for the image being requested
+     * @param aServicePrefix A IIIF service prefix
+     */
+    public Request(final String aID, final String aServicePrefix) {
+        this(aID, aServicePrefix, new Region());
+    }
+
+    /**
      * Creates a IIIF image request object for a particular image region.
      *
      * @param aID An ID for the image being requested
