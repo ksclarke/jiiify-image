@@ -3,6 +3,7 @@ package info.freelibrary.iiif.image;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import info.freelibrary.iiif.image.api.Format;
@@ -42,9 +43,11 @@ public class OpenCVImage extends AbstractImage implements Image {
      * Creates an OpenCVImage from the supplied image file.
      *
      * @param aImageFile An image file
+     * @throws IOException If the supplied image file can't be read
+     * @throws FileNotFoundException If the supplied image file can't be found
      */
     @SuppressWarnings("PMD")
-    public OpenCVImage(final File aImageFile) {
+    public OpenCVImage(final File aImageFile) throws IOException, FileNotFoundException {
 
     }
 
@@ -53,9 +56,11 @@ public class OpenCVImage extends AbstractImage implements Image {
      *
      * @param aImageFile An image file
      * @param aCachedImage If the original image is cached in memory before transformation
+     * @throws IOException If the supplied image file can't be read
+     * @throws FileNotFoundException If the supplied image file can't be found
      */
     @SuppressWarnings("PMD")
-    public OpenCVImage(final File aImageFile, final boolean aCachedImage) {
+    public OpenCVImage(final File aImageFile, final boolean aCachedImage) throws IOException, FileNotFoundException {
 
     }
 

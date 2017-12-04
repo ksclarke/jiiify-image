@@ -2,6 +2,7 @@
 package info.freelibrary.iiif.image;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -90,8 +91,9 @@ public final class ImageFactory {
      * @param aImageFile A source image file
      * @return An image
      * @throws IOException If the image can't be read
+     * @throws FileNotFoundException If the image file can't be found
      */
-    public static Image getImage(final File aImageFile) throws IOException {
+    public static Image getImage(final File aImageFile) throws IOException, FileNotFoundException {
         return DEFAULT_IMAGE_IMPL.getImage(aImageFile, myImagesReset);
     }
 
@@ -102,8 +104,10 @@ public final class ImageFactory {
      * @param aCachedImage If the original image is cached in memory before transformation
      * @return An image
      * @throws IOException If the image can't be read
+     * @throws FileNotFoundException If the image file can't be found
      */
-    public static Image getImage(final File aImageFile, final boolean aCachedImage) throws IOException {
+    public static Image getImage(final File aImageFile, final boolean aCachedImage) throws IOException,
+            FileNotFoundException {
         return DEFAULT_IMAGE_IMPL.getImage(aImageFile, aCachedImage);
     }
 
@@ -114,8 +118,10 @@ public final class ImageFactory {
      * @param aImageFile A source image file
      * @return An image
      * @throws IOException If the image can't be ready
+     * @throws FileNotFoundException If the image file can't be found
      */
-    public static Image getImage(final ImageImpl aImageType, final File aImageFile) throws IOException {
+    public static Image getImage(final ImageImpl aImageType, final File aImageFile) throws IOException,
+            FileNotFoundException {
         return aImageType.getImage(aImageFile, myImagesReset);
     }
 
@@ -127,9 +133,10 @@ public final class ImageFactory {
      * @param aCachedImage If the original image is cached in memory before transformation
      * @return An image
      * @throws IOException If the image can't be ready
+     * @throws FileNotFoundException If the image file can't be found
      */
     public static Image getImage(final ImageImpl aImageType, final File aImageFile, final boolean aCachedImage)
-            throws IOException {
+            throws IOException, FileNotFoundException {
         return aImageType.getImage(aImageFile, aCachedImage);
     }
 

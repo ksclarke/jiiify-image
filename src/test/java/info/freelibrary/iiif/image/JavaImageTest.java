@@ -57,7 +57,7 @@ public class JavaImageTest {
         image.free();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testNullInput() throws IOException {
         new JavaImage((File) null);
     }

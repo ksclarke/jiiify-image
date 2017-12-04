@@ -16,6 +16,7 @@ import java.awt.image.WritableRaster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -93,6 +95,8 @@ public class JavaImage extends AbstractImage implements Image {
      * @throws IOException If there is trouble reading the image
      */
     public JavaImage(final byte[] aImageByteArray, final boolean aCachedImage) throws IOException {
+        Objects.requireNonNull(aImageByteArray, LOGGER.getMessage(MessageCodes.EXC_086, byte[].class.getName()));
+
         final ByteArrayInputStream inStream = new ByteArrayInputStream(aImageByteArray);
         final ImageInputStream input = ImageIO.createImageInputStream(inStream);
         final Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
@@ -126,8 +130,9 @@ public class JavaImage extends AbstractImage implements Image {
      *
      * @param aImageFile An image file
      * @throws IOException If there is trouble reading the image
+     * @throws FileNotFoundException If the supplied file couldn't be found
      */
-    public JavaImage(final File aImageFile) throws IOException {
+    public JavaImage(final File aImageFile) throws IOException, FileNotFoundException {
         this(aImageFile, false);
     }
 
@@ -137,8 +142,15 @@ public class JavaImage extends AbstractImage implements Image {
      * @param aImageFile An image file
      * @param aCachedImage If the original image is cached in memory before transformation
      * @throws IOException If there is trouble reading the image
+     * @throws FileNotFoundException If the supplied file couldn't be found
      */
-    public JavaImage(final File aImageFile, final boolean aCachedImage) throws IOException {
+    public JavaImage(final File aImageFile, final boolean aCachedImage) throws IOException, FileNotFoundException {
+        Objects.requireNonNull(aImageFile, LOGGER.getMessage(MessageCodes.EXC_086, File.class.getName()));
+
+        if (!aImageFile.exists()) {
+            throw new FileNotFoundException(aImageFile.getAbsolutePath());
+        }
+
         final ImageInputStream input = ImageIO.createImageInputStream(aImageFile);
         final Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
 

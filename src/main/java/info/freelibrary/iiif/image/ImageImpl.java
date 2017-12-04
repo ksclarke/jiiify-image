@@ -2,6 +2,7 @@
 package info.freelibrary.iiif.image;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -16,7 +17,8 @@ public enum ImageImpl {
         }
 
         @Override
-        public JavaImage getImage(final File aImageFile, final boolean aCachedImage) throws IOException {
+        public JavaImage getImage(final File aImageFile, final boolean aCachedImage) throws IOException,
+                FileNotFoundException {
             return new JavaImage(aImageFile, aCachedImage);
         }
     },
@@ -28,7 +30,8 @@ public enum ImageImpl {
         }
 
         @Override
-        public OpenCVImage getImage(final File aImageFile, final boolean aCachedImage) throws IOException {
+        public OpenCVImage getImage(final File aImageFile, final boolean aCachedImage) throws IOException,
+                FileNotFoundException {
             return new OpenCVImage(aImageFile, aCachedImage);
         }
     };
@@ -50,7 +53,8 @@ public enum ImageImpl {
      * @param aCachedImage If the original image is cached in memory before transformation
      * @return An image
      * @throws IOException If there was trouble reading from the byte array
+     * @throws FileNotFoundException If the supplied image file could not be found
      */
-    public abstract Image getImage(File aImageFile, boolean aCachedImage) throws IOException;
+    public abstract Image getImage(File aImageFile, boolean aCachedImage) throws IOException, FileNotFoundException;
 
 }
