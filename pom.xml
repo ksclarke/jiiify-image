@@ -191,6 +191,7 @@
             <link>https://google.github.io/guava/releases/${guava.version}/api/docs/</link>
             <link>https://docs.oracle.com/javase/8/docs/api/</link>
           </links>
+          <sourcepath>src/main/java:src/main/generated</sourcepath>
         </configuration>
         <executions>
           <execution>
