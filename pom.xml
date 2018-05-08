@@ -39,11 +39,11 @@
   </developers>
 
   <properties>
-    <freelib.utils.version>0.8.5</freelib.utils.version>
+    <freelib.utils.version>0.8.8</freelib.utils.version>
     <twelvemonkeys.version>3.3.2</twelvemonkeys.version>
     <imgscalr.version>4.2</imgscalr.version>
-    <jackson.version>2.9.2</jackson.version>
-    <guava.version>23.0</guava.version>
+    <jackson.version>2.9.5</jackson.version>
+    <guava.version>25.0-jre</guava.version>
 
     <!-- Test related versions -->
     <vertx.version>3.4.2</vertx.version>
@@ -276,7 +276,7 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>0.2.6</version>
+    <version>0.2.8-SNAPSHOT</version>
   </parent>
 
 </project>
