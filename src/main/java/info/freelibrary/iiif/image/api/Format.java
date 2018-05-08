@@ -73,7 +73,7 @@ public enum Format {
      * @return A file extension for the supplied MIME type
      * @throws UnsupportedFormatException If the supplied media type doesn't map to a known format
      */
-    public static final String getExtension(final String aMimeType) throws UnsupportedFormatException {
+    public static String getExtension(final String aMimeType) throws UnsupportedFormatException {
         return parseMimeType(aMimeType).getExtension();
     }
 
@@ -84,7 +84,7 @@ public enum Format {
      * @return A MIME type for the supplied file extension
      * @throws UnsupportedFormatException If the supplied file extension doesn't map to a know format
      */
-    public static final String getMimeType(final String aFileExt) throws UnsupportedFormatException {
+    public static String getMimeType(final String aFileExt) throws UnsupportedFormatException {
         return parseExtension(aFileExt).myValue;
     }
 
