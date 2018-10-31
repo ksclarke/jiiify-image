@@ -46,7 +46,7 @@
     <guava.version>25.0-jre</guava.version>
 
     <!-- Test related versions -->
-    <vertx.version>3.5.1</vertx.version>
+    <vertx.version>3.5.4</vertx.version>
 
     <!-- Build related versions -->
     <codacy.plugin.version>1.0.2</codacy.plugin.version>
