@@ -42,7 +42,7 @@
     <freelib.utils.version>0.8.8</freelib.utils.version>
     <twelvemonkeys.version>3.3.2</twelvemonkeys.version>
     <imgscalr.version>4.2</imgscalr.version>
-    <jackson.version>2.9.7</jackson.version>
+    <jackson.version>2.9.8</jackson.version>
     <guava.version>25.0-jre</guava.version>
 
     <!-- Test related versions -->
