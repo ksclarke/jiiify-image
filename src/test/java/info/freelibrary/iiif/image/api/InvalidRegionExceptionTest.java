@@ -14,8 +14,6 @@ import info.freelibrary.iiif.image.util.TestConstants;
 
 /**
  * A test of {@link info.freelibrary.jiiify.iiif.InvalidRegionException}
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class InvalidRegionExceptionTest {
 

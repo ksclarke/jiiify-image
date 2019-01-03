@@ -8,13 +8,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import info.freelibrary.iiif.image.api.InvalidSizeException;
-import info.freelibrary.iiif.image.api.Size;
-
 /**
- * A test of {@link info.freelibrary.Size.iiif.ImageSize}
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
+ * A test of {@link info.freelibrary.Size.iiif.ImageSize}.
  */
 public class SizeTest {
 

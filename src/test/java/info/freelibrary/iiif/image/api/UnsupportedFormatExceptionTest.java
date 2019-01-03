@@ -18,8 +18,6 @@ import info.freelibrary.util.StringUtils;
 
 /**
  * An exception thrown when the supplied format is not a valid IIIF format.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class UnsupportedFormatExceptionTest {
 
