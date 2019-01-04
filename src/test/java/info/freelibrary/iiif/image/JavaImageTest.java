@@ -211,14 +211,20 @@ public class JavaImageTest {
 
     @Test
     public void testHashCodeFileSource() throws IOException {
-        assertEquals(892583188, new JavaImage(TestResource.TEST_EXTRACTED).hashCode());
+        final int hashCode1 = new JavaImage(TestResource.TEST_EXTRACTED).hashCode();
+        final int hashCode2 = new JavaImage(TestResource.TEST_EXTRACTED).hashCode();
+
+        assertEquals(hashCode1, hashCode2);
+        assertNotEquals(0, hashCode1);
     }
 
     @Test
     public void testHashCodeByteArraySource() throws IOException {
         final byte[] bytes = Files.readAllBytes(TestResource.TEST_EXTRACTED.toPath());
+        final int hashCode = new JavaImage(bytes).hashCode();
 
-        assertEquals(892583188, new JavaImage(bytes).hashCode());
+        assertEquals(hashCode, new JavaImage(bytes).hashCode());
+        assertNotEquals(0, hashCode);
     }
 
     @Test
