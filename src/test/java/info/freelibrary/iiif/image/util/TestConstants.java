@@ -3,8 +3,6 @@ package info.freelibrary.iiif.image.util;
 
 /**
  * Constants used by the tests.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public interface TestConstants {
 

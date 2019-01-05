@@ -2,11 +2,9 @@
 package info.freelibrary.iiif.image.api;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.Locale;
-import java.util.MissingResourceException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,8 +15,6 @@ import info.freelibrary.iiif.image.util.TestConstants;
 
 /**
  * A test of {@link info.freelibrary.ImageException.iiif.IIIFImageException}
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class ImageExceptionTest {
 
@@ -43,23 +39,6 @@ public class ImageExceptionTest {
     @After
     public void tearDown() throws Exception {
         Locale.setDefault(myDefaultLocale);
-    }
-
-    @Test
-    public void testIIIFImageExceptionString() {
-        try {
-            new ImageException(TestConstants.BAD_MSG_KEY);
-            fail("Failed to notice a bad message key was supplied");
-        } catch (final MissingResourceException details) {
-            // This exception is expected...
-        }
-
-        try {
-            new ImageException(TestConstants.EMPTY_STRING);
-            fail("Could not create an exception without a message");
-        } catch (final MissingResourceException details) {
-            // This exception is expected...
-        }
     }
 
     @Test

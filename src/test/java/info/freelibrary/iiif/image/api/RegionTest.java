@@ -8,14 +8,10 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import info.freelibrary.iiif.image.api.InvalidRegionException;
-import info.freelibrary.iiif.image.api.Region;
 import info.freelibrary.iiif.image.api.Region.Coordinate;
 
 /**
  * A test of {@link info.freelibrary.Region.iiif.ImageRegion}
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class RegionTest {
 

@@ -39,14 +39,14 @@
   </developers>
 
   <properties>
-    <freelib.utils.version>0.8.8</freelib.utils.version>
-    <twelvemonkeys.version>3.3.2</twelvemonkeys.version>
+    <freelib.utils.version>0.8.9</freelib.utils.version>
+    <twelvemonkeys.version>3.4.1</twelvemonkeys.version>
     <imgscalr.version>4.2</imgscalr.version>
-    <jackson.version>2.9.7</jackson.version>
-    <guava.version>25.0-jre</guava.version>
+    <jackson.version>2.9.8</jackson.version>
+    <guava.version>27.0.1-jre</guava.version>
 
     <!-- Test related versions -->
-    <vertx.version>3.5.4</vertx.version>
+    <vertx.version>3.6.2</vertx.version>
 
     <!-- Build related versions -->
     <codacy.plugin.version>1.0.2</codacy.plugin.version>
@@ -277,7 +277,8 @@
   <parent>
     <artifactId>freelib-parent</artifactId>
     <groupId>info.freelibrary</groupId>
-    <version>0.2.9</version>
+    <version>0.3.4</version>
   </parent>
 
 </project>
+

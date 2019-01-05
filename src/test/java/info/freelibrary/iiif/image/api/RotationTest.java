@@ -5,13 +5,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import info.freelibrary.iiif.image.api.InvalidRotationException;
-import info.freelibrary.iiif.image.api.Rotation;
-
 /**
  * Tests <code>ImageRotation</code>.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class RotationTest {
 

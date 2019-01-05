@@ -27,8 +27,6 @@ import info.freelibrary.iiif.image.api.Size;
 
 /**
  * Tests for the Java implementation of image.
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class JavaImageTest {
 
@@ -213,14 +211,20 @@ public class JavaImageTest {
 
     @Test
     public void testHashCodeFileSource() throws IOException {
-        assertEquals(-980278941, new JavaImage(TestResource.TEST_EXTRACTED).hashCode());
+        final int hashCode1 = new JavaImage(TestResource.TEST_EXTRACTED).hashCode();
+        final int hashCode2 = new JavaImage(TestResource.TEST_EXTRACTED).hashCode();
+
+        assertEquals(hashCode1, hashCode2);
+        assertNotEquals(0, hashCode1);
     }
 
     @Test
     public void testHashCodeByteArraySource() throws IOException {
         final byte[] bytes = Files.readAllBytes(TestResource.TEST_EXTRACTED.toPath());
+        final int hashCode = new JavaImage(bytes).hashCode();
 
-        assertEquals(-980278941, new JavaImage(bytes).hashCode());
+        assertEquals(hashCode, new JavaImage(bytes).hashCode());
+        assertNotEquals(0, hashCode);
     }
 
     @Test

@@ -8,21 +8,12 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import info.freelibrary.iiif.image.api.Format;
-import info.freelibrary.iiif.image.api.ImageException;
-import info.freelibrary.iiif.image.api.Quality;
-import info.freelibrary.iiif.image.api.Region;
-import info.freelibrary.iiif.image.api.Request;
-import info.freelibrary.iiif.image.api.Rotation;
-import info.freelibrary.iiif.image.api.Size;
 import info.freelibrary.iiif.image.util.LoggingUtils;
 
 import ch.qos.logback.classic.Level;
 
 /**
  * A test of {@link info.freelibrary.Request.iiif.ImageRequest}
- *
- * @author <a href="mailto:ksclarke@ksclarke.io">Kevin S. Clarke</a>
  */
 public class RequestTest {
 
