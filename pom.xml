@@ -43,7 +43,7 @@
     <twelvemonkeys.version>3.4.1</twelvemonkeys.version>
     <imgscalr.version>4.2</imgscalr.version>
     <jackson.version>2.10.1</jackson.version>
-    <jackson.databind.version>2.10.1</jackson.databind.version>
+    <jackson.databind.version>2.10.5.1</jackson.databind.version>
     <guava.version>27.0.1-jre</guava.version>
 
     <!-- Test related versions -->
