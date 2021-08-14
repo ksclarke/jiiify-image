@@ -39,7 +39,7 @@
   </developers>
 
   <properties>
-    <freelib.utils.version>0.8.9</freelib.utils.version>
+    <freelib.utils.version>1.0.1</freelib.utils.version>
     <twelvemonkeys.version>3.4.1</twelvemonkeys.version>
     <imgscalr.version>4.2</imgscalr.version>
     <jackson.version>2.10.1</jackson.version>
