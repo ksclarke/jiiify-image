@@ -40,9 +40,9 @@
 
   <properties>
     <freelib.utils.version>0.8.9</freelib.utils.version>
-    <twelvemonkeys.version>3.4.1</twelvemonkeys.version>
+    <twelvemonkeys.version>3.7.1</twelvemonkeys.version>
     <imgscalr.version>4.2</imgscalr.version>
-    <jackson.version>2.10.1</jackson.version>
+    <jackson.version>2.12.6</jackson.version>
     <jackson.databind.version>2.10.1</jackson.databind.version>
     <guava.version>27.0.1-jre</guava.version>
 
